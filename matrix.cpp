@@ -10,6 +10,7 @@ using namespace std;
 //矩阵元素区间
 int lowdown, lowup;
 
+//求最大公约数
 int Division(int a, int b) {
 	if (a < b) swap(a, b);		//a要大于等于b
 	while (b != 0) {
@@ -23,15 +24,19 @@ int Division(int a, int b) {
 
 class Matrix
 {
-public:
+public:	
+//行数
 	int line;
+//列数
 	int column;
+//二维数组存储矩阵元素
 	int m[10][10];
 
 	Matrix() {
 
 	}
 
+//生成一个l行c列的矩阵
 	Matrix(int l, int c) {
 		line = l;
 		column = c;
@@ -43,7 +48,8 @@ public:
 			}
 		}
 	}
-	//0矩阵
+
+//l行c列的0矩阵
 	Matrix(int l, int c,bool flag) {
 		line = l;
 		column = c;
@@ -56,7 +62,7 @@ public:
 		}
 	}
 
-	//指定矩阵，需要手动调整a[][]
+//指定二维矩阵，需要调整矩阵的规模时请手动调整a[][]
 	Matrix(int l, int c, int a[2][2]) {
 		line = l;
 		column = c;
@@ -68,7 +74,8 @@ public:
 		}
 	}
 
-	//从零行零列开始
+//获得余子式M_ij矩阵
+//从零行零列开始
 	Matrix getAs(int x,int y) {
 		Matrix k(line-1,column-1,true);
 		//i,j是伴随矩阵，p，q是原A矩阵
@@ -88,7 +95,8 @@ public:
 		}
 		return k;
 	}
-
+// 获得行列式的值A
+// 采用递归调用
 	int getA(int n) {
 		int sum = 0;
 		
@@ -98,15 +106,13 @@ public:
 
 		for (int j = 0; j < n; j++)
 		{
-			int k = this->m[0][j] * pow(-1, 0 + j);
-			
-			sum += this->m[0][j] * pow(-1, 0 + j) * this->getAs(0, j).getA(this->getAs(0, j).line);
-			
+// 行列式|A|=a_0j * 代数余子式A_0j
+			sum += this->m[0][j] * pow(-1, 0 + j) * this->getAs(0, j).getA(this->getAs(0, j).line);			
 		}
 		return sum;
 	}
 	
-
+// 矩阵乘一个数
 	Matrix numberMul(int k) {
 		Matrix temp(line, column);
 		for (int i = 0; i < line; i++)
@@ -335,9 +341,13 @@ public:
 class Inverse
 {
 public:
+// 原矩阵
 	Matrix a;
+// 矩阵的行列式的值A
 	int A;
+//A的伴随矩阵
 	Matrix Astar;
+// 逆矩阵
 	Matrix inv;
 
 	Inverse(Matrix m1) {
@@ -346,8 +356,9 @@ public:
 	}
 
 	void calc() {
+// A的伴随矩阵A*=代数余子式Aij=(-1)^(i+j)乘以余子式Mij
 		cout << "Inverse :line:" << a.line << " column:" << a.column << endl;
-		cout << "********************************************\n|A*|=\n";
+		cout << "********************************************\nA*=\n";
 		for (int i = 0; i < a.line; i++) {
 			cout << "|";
 			for (int j = 0; j < a.column; j++) {
@@ -358,29 +369,35 @@ public:
 		}
 		cout << "--------------------------------------------\n";
 
-		A = a.getA(a.line);
 		printf_s("|A|=%d\n", A);
 		cout << "--------------------------------------------\n";
-
+// A=0无逆矩阵
 		if (A == 0) {
 			cout << "None\n";
 			return;
 		}
 
-		printf_s("|A^-1|=\n");
+// A^-1逆矩阵=1/|A| *伴随矩阵
+		printf_s("A^-1=\n");
 		for (int i = 0; i < a.line; i++) {
 			cout << "|";
 			for (int j = 0; j < a.column; j++) {
+
+// 这些输出是为了输出逆矩阵的结果
+
+// 分这么多if是为了好看
+
+// 如果可以直接整除，即4/2  4/-2  0/5的情况，就直接输出相除的结果
+
 				if ((Division(A, Astar.m[i][j]) ==A && abs(Astar.m[i][j])>=abs(A))   || (Division(A, Astar.m[i][j]) == -A && abs(Astar.m[i][j]) >= abs(A))    ||   Astar.m[i][j] == 0)
 				{
 					printf_s("A(%d,%d)：%+12d    ", i + 1, j + 1, Astar.m[i][j]/A );
 				}
+// 如果不可以整除，用分数表示
+
+// 考虑到9/6可以化简为3/2的情况，就用9和6分别除以最大公约数3
 				else {
-					if (Astar.m[i][j] < 0 && A < 0) {
-						printf_s("A(%d,%d)：(%+3d)/(%+3d)    ", i + 1, j + 1, Astar.m[i][j] / Division(A, Astar.m[i][j]), A / Division(A, Astar.m[i][j]));
-					}
-					else
-						printf_s("A(%d,%d)：(%+3d)/(%+3d)    ", i + 1, j + 1, Astar.m[i][j] / Division(A, Astar.m[i][j]), A / Division(A, Astar.m[i][j]));
+					printf_s("A(%d,%d)：(%+3d)/(%+3d)    ", i + 1, j + 1, Astar.m[i][j] / Division(A, Astar.m[i][j]), A / Division(A, Astar.m[i][j]));
 				}
 			}
 			cout << "|" << endl;
