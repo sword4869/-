@@ -1,4 +1,4 @@
-﻿#include<stdio.h>
+#include<stdio.h>
 #include<stdlib.h>
 #include<iostream>
 #include<time.h>
@@ -24,19 +24,19 @@ int Division(int a, int b) {
 
 class Matrix
 {
-public:	
-//行数
+public:
+	//行数
 	int line;
-//列数
+	//列数
 	int column;
-//二维数组存储矩阵元素
+	//二维数组存储矩阵元素
 	int m[10][10];
 
 	Matrix() {
 
 	}
 
-//生成一个l行c列的矩阵
+	//生成一个l行c列的矩阵
 	Matrix(int l, int c) {
 		line = l;
 		column = c;
@@ -44,13 +44,13 @@ public:
 		{
 			for (int j = 0; j < column; j++)
 			{
-				m[i][j] = rand() % (lowup - lowdown)-(-lowdown);
+				m[i][j] = rand() % (lowup - lowdown) - (-lowdown);
 			}
 		}
 	}
 
-//l行c列的0矩阵
-	Matrix(int l, int c,bool flag) {
+	//l行c列的0矩阵
+	Matrix(int l, int c, bool flag) {
 		line = l;
 		column = c;
 		for (int i = 0; i < line; i++)
@@ -62,7 +62,7 @@ public:
 		}
 	}
 
-//指定二维矩阵，需要调整矩阵的规模时请手动调整a[][]
+	//指定二维矩阵，需要调整矩阵的规模时请手动调整a[][]
 	Matrix(int l, int c, int a[2][2]) {
 		line = l;
 		column = c;
@@ -74,13 +74,13 @@ public:
 		}
 	}
 
-//获得余子式M_ij矩阵
-//从零行零列开始
-	Matrix getAs(int x,int y) {
-		Matrix k(line-1,column-1,true);
+	//获得余子式M_ij矩阵
+	//从零行零列开始
+	Matrix getAs(int x, int y) {
+		Matrix k(line - 1, column - 1, true);
 		//i,j是伴随矩阵，p，q是原A矩阵
-	
-		for (int i = 0,p=0; i < line - 1; i++) {
+
+		for (int i = 0, p = 0; i < line - 1; i++) {
 			for (int j = 0, q = 0; j < column - 1; j++) {
 				if (p == x) {
 					p++;
@@ -95,24 +95,24 @@ public:
 		}
 		return k;
 	}
-// 获得行列式的值A
-// 采用递归调用
+	// 获得行列式的值A
+	// 采用递归调用
 	int getA(int n) {
 		int sum = 0;
-		
+
 		if (n == 1) {
 			return this->m[0][0];
 		}
 
 		for (int j = 0; j < n; j++)
 		{
-// 行列式|A|=a_0j * 代数余子式A_0j
-			sum += this->m[0][j] * pow(-1, 0 + j) * this->getAs(0, j).getA(this->getAs(0, j).line);			
+			// 行列式|A|=a_0j * 代数余子式A_0j
+			sum += this->m[0][j] * pow(-1, 0 + j) * this->getAs(0, j).getA(this->getAs(0, j).line);
 		}
 		return sum;
 	}
-	
-// 矩阵乘一个数
+
+	// 矩阵乘一个数
 	Matrix numberMul(int k) {
 		Matrix temp(line, column);
 		for (int i = 0; i < line; i++)
@@ -176,7 +176,7 @@ public:
 		{
 			for (int j = 0; j < a.column; j++)
 			{
-				printf_s("%15d,", a.m[i][j]+b.m[i][j]);
+				printf_s("%15d,", a.m[i][j] + b.m[i][j]);
 			}
 			cout << endl;
 		}
@@ -241,7 +241,7 @@ public:
 	Multiplication(Matrix m1, Matrix m2) {
 		a = m1;
 		b = m2;
-		mul = Matrix(a.line, b.column,true);
+		mul = Matrix(a.line, b.column, true);
 	}
 
 	void calc() {
@@ -253,7 +253,7 @@ public:
 				cout << "Multiplication :line:" << i << " column:" << j << endl;
 				cout << "********************************************\n";
 				for (int k = 0; k < a.column; k++) {
-					mul.m[i][j] +=a.m[i][k]*b.m[k][j];
+					mul.m[i][j] += a.m[i][k] * b.m[k][j];
 				}
 
 				for (int p = 0; p < a.line; p++) {
@@ -281,7 +281,7 @@ public:
 		{
 			for (int j = 0; j < b.column; j++)
 			{
-				printf_s("%15d,",mul.m[i][j]);
+				printf_s("%15d,", mul.m[i][j]);
 			}
 			cout << endl;
 		}
@@ -299,7 +299,7 @@ public:
 	}
 
 	void calc() {
-		Matrix k(a.column, a.line,true);
+		Matrix k(a.column, a.line, true);
 
 		for (int i = 0; i < a.column; i++)
 		{
@@ -320,7 +320,7 @@ public:
 			}
 			cout << endl;
 		}
-		
+
 	}
 
 	void print() {
@@ -341,13 +341,13 @@ public:
 class Inverse
 {
 public:
-// 原矩阵
+	// 原矩阵
 	Matrix a;
-// 矩阵的行列式的值A
+	// 矩阵的行列式的值A
 	int A;
-//A的伴随矩阵
+	//A的伴随矩阵
 	Matrix Astar;
-// 逆矩阵
+	// 逆矩阵
 	Matrix inv;
 
 	Inverse(Matrix m1) {
@@ -356,51 +356,57 @@ public:
 	}
 
 	void calc() {
-// A的伴随矩阵A*=代数余子式Aij=(-1)^(i+j)乘以余子式Mij
+		// A的伴随矩阵A*=代数余子式Aij=(-1)^(i+j)乘以余子式Mij
+		for (int i = 0; i < a.line; i++) {
+
+			for (int j = 0; j < a.column; j++) {
+				Astar.m[j][i] = pow(-1, i + j) * a.getAs(i, j).getA(a.getAs(i, j).line);
+			}
+		}
+
 		cout << "Inverse :line:" << a.line << " column:" << a.column << endl;
 		cout << "********************************************\nA*=\n";
 		for (int i = 0; i < a.line; i++) {
-			cout << "|";
+
 			for (int j = 0; j < a.column; j++) {
-				Astar.m[i][j] = pow(-1,i+j)*a.getAs(i, j).getA(a.getAs(i, j).line);
-				printf_s("(A%d%d：%3d)    ", i + 1, j + 1, Astar.m[i][j]);
+				
+				printf_s("(A%d%d：%3d)    ", j+1,i+1, Astar.m[i][j]);
 			}
-			cout << "|" << endl;
+			cout << endl;
 		}
 		cout << "--------------------------------------------\n";
 
 		printf_s("|A|=%d\n", A);
 		cout << "--------------------------------------------\n";
-// A=0无逆矩阵
+		// A=0无逆矩阵
 		if (A == 0) {
 			cout << "None\n";
 			return;
 		}
 
-// A^-1逆矩阵=1/|A| *伴随矩阵
+		// A^-1逆矩阵=1/|A| *伴随矩阵
 		printf_s("A^-1=\n");
 		for (int i = 0; i < a.line; i++) {
-			cout << "|";
 			for (int j = 0; j < a.column; j++) {
 
-// 这些输出是为了输出逆矩阵的结果
+				// 这些输出是为了输出逆矩阵的结果
 
-// 分这么多if是为了好看
+				// 分这么多if是为了好看
 
-// 如果可以直接整除，即4/2  4/-2  0/5的情况，就直接输出相除的结果
+				// 如果可以直接整除，即4/2  4/-2  0/5的情况，就直接输出相除的结果
 
-				if ((Division(A, Astar.m[i][j]) ==A && abs(Astar.m[i][j])>=abs(A))   || (Division(A, Astar.m[i][j]) == -A && abs(Astar.m[i][j]) >= abs(A))    ||   Astar.m[i][j] == 0)
+				if ((Division(A, Astar.m[i][j]) == A && abs(Astar.m[i][j]) >= abs(A)) || (Division(A, Astar.m[i][j]) == -A && abs(Astar.m[i][j]) >= abs(A)) || Astar.m[i][j] == 0)
 				{
-					printf_s("A(%d,%d)：%+12d    ", i + 1, j + 1, Astar.m[i][j]/A );
+					printf_s("%+12d    ", Astar.m[i][j] / A);
 				}
-// 如果不可以整除，用分数表示
+				// 如果不可以整除，用分数表示
 
-// 考虑到9/6可以化简为3/2的情况，就用9和6分别除以最大公约数3
+				// 考虑到9/6可以化简为3/2的情况，就用9和6分别除以最大公约数3
 				else {
-					printf_s("A(%d,%d)：(%+3d)/(%+3d)    ", i + 1, j + 1, Astar.m[i][j] / Division(A, Astar.m[i][j]), A / Division(A, Astar.m[i][j]));
+					printf_s("(%+3d)/(%+3d)    ", Astar.m[i][j] / Division(A, Astar.m[i][j]), A / Division(A, Astar.m[i][j]));
 				}
 			}
-			cout << "|" << endl;
+			cout << endl;
 		}
 		cout << "--------------------------------------------\n";
 	}
@@ -412,8 +418,8 @@ int main(int argc, char* argv[])
 
 	cout << "输入矩阵元素随机生成的区间a和b（可以为负数）：" << endl;
 	cin >> lowdown >> lowup;
-		
-	
+
+
 	while (true)
 	{
 		printf_s("Please choice your operator: \n"
@@ -518,7 +524,7 @@ int main(int argc, char* argv[])
 			int n;
 			cin >> n;
 
-			Matrix m8(n,n);
+			Matrix m8(n, n);
 			m8.print();
 
 			Inverse inv(m8);
@@ -534,6 +540,6 @@ int main(int argc, char* argv[])
 		system("cls");
 	}
 
-	
+
 	return 0;
 }
