@@ -147,6 +147,8 @@ public:
 	}
 
 	void calc() {
+		
+		system("pause");
 
 		for (int i = 0; i < a.line; i++)
 		{
@@ -163,7 +165,7 @@ public:
 					}
 					cout << endl;
 				}
-				cout << "--------------------------------------------\n";
+				system("pause");
 			}
 			cout << endl;
 		}
@@ -180,7 +182,7 @@ public:
 			}
 			cout << endl;
 		}
-		cout << "--------------------------------------------\n";
+		system("pause");
 	}
 };
 
@@ -195,7 +197,7 @@ public:
 	}
 
 	void calc() {
-
+		system("pause");
 		for (int i = 0; i < a.line; i++)
 		{
 			for (int j = 0; j < a.column; j++)
@@ -211,7 +213,7 @@ public:
 					}
 					cout << endl;
 				}
-				cout << "--------------------------------------------\n";
+				system("pause");
 			}
 			cout << endl;
 		}
@@ -228,7 +230,7 @@ public:
 			}
 			cout << endl;
 		}
-		cout << "--------------------------------------------\n";
+		system("pause");
 	}
 };
 
@@ -245,7 +247,7 @@ public:
 	}
 
 	void calc() {
-
+		system("pause");
 		for (int i = 0; i < a.line; i++)
 		{
 			for (int j = 0; j < b.column; j++)
@@ -268,7 +270,7 @@ public:
 						cout << "+";
 					}
 				}
-				cout << "\n--------------------------------------------\n";
+				system("pause");
 			}
 			cout << endl;
 		}
@@ -285,7 +287,7 @@ public:
 			}
 			cout << endl;
 		}
-		cout << "--------------------------------------------\n";
+		system("pause");
 	}
 };
 
@@ -299,6 +301,7 @@ public:
 	}
 
 	void calc() {
+		system("pause");
 		Matrix k(a.column, a.line, true);
 
 		for (int i = 0; i < a.column; i++)
@@ -316,7 +319,7 @@ public:
 					}
 					cout << endl;
 				}
-				cout << "--------------------------------------------\n";
+				system("pause");
 			}
 			cout << endl;
 		}
@@ -334,7 +337,7 @@ public:
 			}
 			cout << endl;
 		}
-		cout << "--------------------------------------------\n";
+		system("pause");
 	}
 };
 
@@ -356,6 +359,7 @@ public:
 	}
 
 	void calc() {
+		system("pause");
 		// A的伴随矩阵A*=代数余子式Aij=(-1)^(i+j)乘以余子式Mij
 		for (int i = 0; i < a.line; i++) {
 
@@ -374,10 +378,12 @@ public:
 			}
 			cout << endl;
 		}
-		cout << "--------------------------------------------\n";
+		system("pause");
 
 		printf_s("|A|=%d\n", A);
-		cout << "--------------------------------------------\n";
+		system("pause");
+
+
 		// A=0无逆矩阵
 		if (A == 0) {
 			cout << "None\n";
@@ -408,7 +414,7 @@ public:
 			}
 			cout << endl;
 		}
-		cout << "--------------------------------------------\n";
+		system("pause");
 	}
 };
 
@@ -536,7 +542,6 @@ int main(int argc, char* argv[])
 			break;
 		}
 		}
-		system("pause");
 		system("cls");
 	}
 
